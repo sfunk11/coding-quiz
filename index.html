@@ -13,12 +13,26 @@
 </head>
 
 <body>
+    <h1>Coding Quiz!</h1>
+
+    <div id = "timer">
+        <h5>Time: <span id=seconds>0</span></h5>
+    </div>
+
     <div class="quiz-container">
+        <button id= "start"> Start the Quiz </button>
+        </div>
+        <br>
         <div id="quiz"></div>
+            <div id = "question"> </div>
+            <div id = "answers">
+             <button class = "btn-info btn btn-choice" id = "btn-a" value = "a"></button>
+             <button class = "btn-info btn btn-choice" id = "btn-b" value = "b"></button>
+             <button class = "btn-info btn btn-choice" id = "btn-c" value = "c"></button>
+             <button class = "btn-info btn btn-choice" id = "btn-d" value = "d"></button>
+          </div>
       </div>
-      <button id="previous">Previous Question</button>
-      <button id="next">Next Question</button>
-      <button id="submit">Submit Quiz</button>
+      <br><hr>
       <div id="results"></div>
 
 
