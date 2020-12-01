@@ -28,17 +28,32 @@ function renderQuestion(){
 }
 
 function gradeQuestion(event){
-    if(event.target.nodeValue === myQuestions[questionIndex].correctAnswer){
+    var useranswer= "";
+    
+    if(event.target == answerA){
+       useranswer = "a";
+    }else if(event.target == answerB){
+        useranswer = "b";
+    }else if (event.target == answerC){
+        useranswer = "c";
+    }else if (event.target == answerD){
+        useranswer = "d";
+    }
+
+    if (useranswer === myQuestions[questionIndex].correctAnswer) {
+        score++;
         resultsContainer.innerHTML = "<h3><em>Correct!</em></h3>";
     } else{
         resultsContainer.innerHTML = "<h3><em>Wrong!</em></h3>";
     }
+    progressContainer.textContent = "Current Score: " + score + " of " + myQuestions.length;
     questionIndex++;
     renderQuestion();
 }
 
 // Define Variables
 var quizContainer = document.getElementById('quiz');
+var progressContainer = document.getElementById("progress");
 var QuestionEl = document.getElementById("question");
 var answerA = document.getElementById("btn-a");
 var answerB = document.getElementById("btn-b");
@@ -49,7 +64,8 @@ var startButton = document.getElementById("start");
 var timerEl = document.getElementById("seconds");
 var answerButtons = document.getElementById("answers");
 var quizEnded = false;
-var questionIndex = 0
+var questionIndex = 0;
+var score = 0;
 
 // Define Quiz Questions
 var myQuestions = [
@@ -154,7 +170,7 @@ var myQuestions = [
         correctAnswer: "a"
       },
       {
-        question: "What is the correct attribute to use in your <script> tag to notate your 'scriot.js' file?",
+        question: "What is the correct attribute to use inside your script tag to point to your JavaScript file?",
         answers: {
           a: "src",
           b: "href",
