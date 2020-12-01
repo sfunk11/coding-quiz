@@ -13,8 +13,9 @@ var answerButtons = document.getElementById("answers");
 var quizEnded = false;
 var questionIndex = 0;
 var score = 0;
-var secondsLeft = 200;
+var secondsLeft = 100;
 var timerInterval;
+var highScores = [];
 
 // Define the functions.
 
@@ -46,6 +47,7 @@ function renderQuestion(){
         answerC.innerHTML = myQuestions[questionIndex].answers.c;
         answerD.innerHTML = myQuestions[questionIndex].answers.d;
         answerButtons.classList.remove("d-none");
+        quizContainer.classList.remove("d-none");
        
     }
 }
@@ -64,6 +66,9 @@ function gradeQuestion(event){
         useranswer = "c";
     }else if (event.target == answerD){
         useranswer = "d";
+    }else {
+        alert("You need to select an answer.");
+       return;
     }
 
     if (useranswer === myQuestions[questionIndex].correctAnswer) {
@@ -85,6 +90,9 @@ function gradeQuestion(event){
 }}}
 
 function startQuiz(){
+    quizEnded = false;
+    secondsLeft = 100;
+    questionIndex = 0;
     renderQuestion();
     countdownTime();
 }
@@ -94,8 +102,25 @@ function endQuiz(){
     quizContainer.classList.add("d-none");
   resultsContainer.textContent = "Your final score is " + score + " out of " + myQuestions.length;
   progressContainer.textContent = "";
+  timerEl.textContent = 0;
+  saveScore();
+  
 }
 
+function saveScore(){
+    var userInitials = prompt("Please enter your initials.");
+    var scoreObject = {initials: userInitials, userScore: score};
+    highScores.push(scoreObject);
+    console.log(highScores);
+    setHighScores();
+}
+function setHighScores(){
+    localStorage.setItem("savedScores", JSON.stringify(highScores));
+}
+
+function getHighScores(){
+    highScores = JSON.parse(localStorage.getItem("savedScores"));
+}
 // Define Quiz Questions
 var myQuestions = [
     {
