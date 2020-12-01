@@ -1,62 +1,3 @@
-
-// Define the functions.
-
-function countdownTime(){
-    var secondsLeft = 200;
-    var timerInterval = setInterval(function(){
-        secondsLeft-- ; 
-        timerEl.textContent = secondsLeft;
-
-        if (secondsLeft === 0){
-            clearInterval(timerInterval);
-            alert("Time's up!");
-        }
-
-    },1000);
-}
-
-function renderQuestion(){
-    if(quizEnded){
-
-    }else{
-        QuestionEl.innerHTML = myQuestions[questionIndex].question;
-        answerA.innerHTML = myQuestions[questionIndex].answers.a;
-        answerB.innerHTML = myQuestions[questionIndex].answers.b;
-        answerC.innerHTML = myQuestions[questionIndex].answers.c;
-        answerD.innerHTML = myQuestions[questionIndex].answers.d;
-        answerButtons.classList.remove("d-none");
-       
-    }
-}
-
-function gradeQuestion(event){
-    var useranswer= "";
-    
-    if(event.target == answerA){
-       useranswer = "a";
-    }else if(event.target == answerB){
-        useranswer = "b";
-    }else if (event.target == answerC){
-        useranswer = "c";
-    }else if (event.target == answerD){
-        useranswer = "d";
-    }
-
-    if (useranswer === myQuestions[questionIndex].correctAnswer) {
-        score++;
-        resultsContainer.innerHTML = "<h3><em>Correct!</em></h3>";
-    } else{
-        resultsContainer.innerHTML = "<h3><em>Wrong!</em></h3>";
-    }
-    progressContainer.textContent = "Current Score: " + score + " of " + myQuestions.length;
-    questionIndex++;
-    renderQuestion();
-}
-function startQuiz(){
-    renderQuestion();
-    countdownTime();
-}
-
 // Define Variables
 var quizContainer = document.getElementById('quiz');
 var progressContainer = document.getElementById("progress");
@@ -72,6 +13,88 @@ var answerButtons = document.getElementById("answers");
 var quizEnded = false;
 var questionIndex = 0;
 var score = 0;
+var secondsLeft = 200;
+var timerInterval;
+
+// Define the functions.
+
+function countdownTime(){
+    timerInterval = setInterval(function(){
+        secondsLeft-- ; 
+        timerEl.textContent = secondsLeft;
+
+        if (secondsLeft === 0){
+            clearInterval(timerInterval);
+            alert("Time's up!");
+            quizEnded = true;
+            renderQuestion();
+        }
+
+    },1000);
+}
+
+function renderQuestion(){
+    if (questionIndex=== myQuestions.length -1){
+        quizEnded = true;
+    }
+    if(quizEnded){
+        endQuiz();
+    }else{
+        QuestionEl.innerHTML = myQuestions[questionIndex].question;
+        answerA.innerHTML = myQuestions[questionIndex].answers.a;
+        answerB.innerHTML = myQuestions[questionIndex].answers.b;
+        answerC.innerHTML = myQuestions[questionIndex].answers.c;
+        answerD.innerHTML = myQuestions[questionIndex].answers.d;
+        answerButtons.classList.remove("d-none");
+       
+    }
+}
+
+function gradeQuestion(event){
+    var useranswer= "";
+    if (quizEnded){
+        renderQuestion()
+    } else {
+
+    if(event.target == answerA){
+       useranswer = "a";
+    }else if(event.target == answerB){
+        useranswer = "b";
+    }else if (event.target == answerC){
+        useranswer = "c";
+    }else if (event.target == answerD){
+        useranswer = "d";
+    }
+
+    if (useranswer === myQuestions[questionIndex].correctAnswer) {
+        score++;
+        resultsContainer.innerHTML = "<em>Correct!</em>";
+    } else{
+        resultsContainer.innerHTML = "<em>Wrong!</em>";
+        secondsLeft -= 10;
+    }
+        if (secondsLeft <= 0){
+            quizEnded = true;
+            renderQuestion();
+        }else{
+        clearInterval(timerInterval);
+        countdownTime();
+         progressContainer.textContent = "Current Score: " + score + " of " + myQuestions.length;
+        questionIndex++;
+        renderQuestion();
+}}}
+
+function startQuiz(){
+    renderQuestion();
+    countdownTime();
+}
+
+function endQuiz(){
+  clearInterval(timerInterval);
+    quizContainer.classList.add("d-none");
+  resultsContainer.textContent = "Your final score is " + score + " out of " + myQuestions.length;
+  progressContainer.textContent = "";
+}
 
 // Define Quiz Questions
 var myQuestions = [
@@ -168,10 +191,10 @@ var myQuestions = [
       {
         question: "Where is the correct place to insert a JavaScript?",
         answers: {
-          a: "Both the <head> section and the <body> section are correct",
-          b: "Neither the <head> nor <body> section",
-          c: "The <head> section",
-          d: "The <body> section"
+          a: "Both the head section and the body section are correct",
+          b: "Neither the head nor body section",
+          c: "The head section",
+          d: "The body section"
         },
         correctAnswer: "a"
       },
