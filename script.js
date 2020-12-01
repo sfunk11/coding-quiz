@@ -24,6 +24,8 @@ function renderQuestion(){
         answerB.innerHTML = myQuestions[questionIndex].answers.b;
         answerC.innerHTML = myQuestions[questionIndex].answers.c;
         answerD.innerHTML = myQuestions[questionIndex].answers.d;
+        answerButtons.classList.remove("d-none");
+       
     }
 }
 
@@ -49,6 +51,10 @@ function gradeQuestion(event){
     progressContainer.textContent = "Current Score: " + score + " of " + myQuestions.length;
     questionIndex++;
     renderQuestion();
+}
+function startQuiz(){
+    renderQuestion();
+    countdownTime();
 }
 
 // Define Variables
@@ -180,5 +186,5 @@ var myQuestions = [
         correctAnswer: "a"
       }
   ];
-  renderQuestion();
+  startButton.addEventListener("click", startQuiz);
   answerButtons.addEventListener("click", gradeQuestion);
