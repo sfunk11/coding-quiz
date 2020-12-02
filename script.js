@@ -94,7 +94,7 @@ function gradeQuestion(event){
 
 function startQuiz(){
     quizEnded = false;
-    secondsLeft = 100;
+    secondsLeft = 90;
     questionIndex = 0;
     renderQuestion();
     countdownTime();
@@ -250,6 +250,16 @@ var myQuestions = [
           d: "type"
         },
         correctAnswer: "a"
+      },
+      {
+        question: "What does HTML stand for?",
+        answers: {
+          a: "Hyper Trainer Marking Language",
+          b: "Hyper Text Marketing Language",
+          c: "Hyper Text Markup Language",
+          d: "Hyper Text Markup Leveler"
+        },
+        correctAnswer: "c"
       }
   ];
   getHighScores();
