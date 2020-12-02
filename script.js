@@ -127,11 +127,14 @@ function getHighScores(){
 }
 
 function showHighScores(){
+    if(!highScores){
+        return;
+    }else{
     for(i = 0; i < highScores.length; i++){
         var scoreItem = document.createElement("li");
         scoreItem.innerHTML= highScores[i].initials + "   -    " + highScores[i].userScore;
         highScoreModal.append(scoreItem);
-      }
+      }}
 }
 // Define Quiz Questions
 var myQuestions = [
