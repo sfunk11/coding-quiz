@@ -262,6 +262,8 @@ var myQuestions = [
         correctAnswer: "c"
       }
   ];
+
+//Pull the previous high scores and listen for the click events
   getHighScores();
   startButton.addEventListener("click", startQuiz);
   answerButtons.addEventListener("click", gradeQuestion);
