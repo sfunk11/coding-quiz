@@ -108,25 +108,28 @@ function endQuiz(){
   progressContainer.textContent = "";
   timerEl.textContent = 0;
   saveScore();
+  getHighScores();
   
 }
 
 function saveScore(){
     var userInitials = prompt("Please enter your initials.");
+    var highScores = [];
     var scoreObject = {initials: userInitials, userScore: score};
     highScores.push(scoreObject);
     console.log(highScores);
-    setHighScores();
+    setHighScores(highScores);
 }
-function setHighScores(){
+function setHighScores(highScores){
     localStorage.setItem("savedScores", JSON.stringify(highScores));
 }
 
 function getHighScores(){
     highScores = JSON.parse(localStorage.getItem("savedScores"));
+    showHighScores(highScores);
 }
 
-function showHighScores(){
+function showHighScores(highScores){
     if(!highScores){
         return;
     }else{
@@ -250,6 +253,5 @@ var myQuestions = [
       }
   ];
   getHighScores();
-  showHighScores();
   startButton.addEventListener("click", startQuiz);
   answerButtons.addEventListener("click", gradeQuestion);
