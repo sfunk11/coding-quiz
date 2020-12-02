@@ -10,6 +10,7 @@ var resultsContainer = document.getElementById('results');
 var startButton = document.getElementById("start");
 var timerEl = document.getElementById("seconds");
 var answerButtons = document.getElementById("answers");
+var highScoreModal = document.getElementById("score-list");
 var quizEnded = false;
 var questionIndex = 0;
 var score = 0;
@@ -73,9 +74,11 @@ function gradeQuestion(event){
 
     if (useranswer === myQuestions[questionIndex].correctAnswer) {
         score++;
-        resultsContainer.innerHTML = "<em>Correct!</em>";
+        resultsContainer.innerHTML = "Correct!";
+        resultsContainer.setAttribute("style", "color:green; font-size:24px");
     } else{
-        resultsContainer.innerHTML = "<em>Wrong!</em>";
+        resultsContainer.innerHTML = "Wrong!";
+        resultsContainer.setAttribute("style", "color:red; font-size:24px");
         secondsLeft -= 10;
     }
         if (secondsLeft <= 0){
@@ -84,7 +87,7 @@ function gradeQuestion(event){
         }else{
         clearInterval(timerInterval);
         countdownTime();
-         progressContainer.textContent = "Current Score: " + score + " of " + myQuestions.length;
+        progressContainer.textContent = "Current Score: " + score + " of " + myQuestions.length;
         questionIndex++;
         renderQuestion();
 }}}
@@ -101,6 +104,7 @@ function endQuiz(){
   clearInterval(timerInterval);
     quizContainer.classList.add("d-none");
   resultsContainer.textContent = "Your final score is " + score + " out of " + myQuestions.length;
+  resultsContainer.setAttribute("style", "color:black; font-size:24px");
   progressContainer.textContent = "";
   timerEl.textContent = 0;
   saveScore();
@@ -120,6 +124,14 @@ function setHighScores(){
 
 function getHighScores(){
     highScores = JSON.parse(localStorage.getItem("savedScores"));
+}
+
+function showHighScores(){
+    for(i = 0; i < highScores.length; i++){
+        var scoreItem = document.createElement("li");
+        scoreItem.innerHTML= highScores[i].initials + "   -    " + highScores[i].userScore;
+        highScoreModal.append(scoreItem);
+      }
 }
 // Define Quiz Questions
 var myQuestions = [
@@ -234,5 +246,7 @@ var myQuestions = [
         correctAnswer: "a"
       }
   ];
+  getHighScores();
+  showHighScores();
   startButton.addEventListener("click", startQuiz);
   answerButtons.addEventListener("click", gradeQuestion);
