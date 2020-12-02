@@ -14,4 +14,4 @@ This site contains a short quiz on coding basics. Your answers are scored as you
 3.) Once all questions are answered, or the time runs out, you will be prompted to enter your initials. 
 * If you click the high score list button after this step, you will see your previous score displayed.  Repeated run throughs of the quiz will add to the list and allow you to compare your score over time.
 
-![Screenshot](./assets/coding-quiz.png)
+![Screenshot](./assets/images/coding-quiz.png)
